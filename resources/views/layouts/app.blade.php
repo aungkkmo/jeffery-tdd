@@ -43,6 +43,7 @@
                                     @auth
                                     <li class="nav-item"><a href="/threads?by={{auth()->user()->name}}" class="nav-link">My Threads</a></li>
                                     @endauth
+                                    <li class="nav-item"><a href="/threads?popular=1" class="nav-link">Popular All Time</a></li>
                             </ul>
                         </li>
                         @auth
