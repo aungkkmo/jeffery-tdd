@@ -6,7 +6,9 @@ use Tests\TestCase;
 class ReadThreadsTest extends TestCase
 {
     use DatabaseMigrations;
+
     protected $thread;
+    
     public function setUp()
     {
         parent::setUp();
@@ -41,4 +43,16 @@ class ReadThreadsTest extends TestCase
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
     }
+     /** @test */
+     function a_user_can_fitler_threads_by_username(){
+         $this->signIn(create('App\User',['name'=>'JohnDoe']));
+
+         $threadbyJohn=create('App\Thread',['user_id'=>auth()->id()]);
+         $threadNotbyJohn=create('App\Thread');
+
+         $this->get('threads?by=JohnDoe')
+         ->assertSee($threadbyJohn->title)
+         ->assertDontSee($threadNotbyJohn->title);
+
+     }
 }
